@@ -14,7 +14,7 @@
   var LULA = 'lula';
 
   // URL pública só entra na mensagem depois da publicação. Preencha aqui.
-  var PUBLIC_URL = '';
+  var PUBLIC_URL = 'https://rhnas.github.io/flavio-ou-lula/';
 
   var QUESTIONS = [
     { id: 1,  text: 'Você defende o impeachment de ministros do STF quando houver fundamento jurídico?', simPara: FLAVIO },
