@@ -31,7 +31,10 @@
     { id: 12, text: 'Você defende ampliar programas sociais mesmo que aumentem as despesas públicas?', simPara: LULA },
     { id: 13, text: 'Você acha que decisões individuais de ministros do STF deveriam ter limites mais rígidos?', simPara: FLAVIO },
     { id: 14, text: 'Você apoiaria ampliar parcerias com a rede privada para reduzir filas no SUS?', simPara: FLAVIO },
-    { id: 15, text: 'O combate à corrupção deve ser prioridade mesmo quando envolve aliados políticos?', simPara: LULA }
+    { id: 15, text: 'Você acha que o governo atual combate bem a corrupção?', simPara: LULA },
+    { id: 16, text: 'A tão sonhada picanha chegou?', simPara: LULA },
+    { id: 17, text: 'Você se orgulha do que o Brasil se tornou nos últimos 24 anos?', simPara: LULA },
+    { id: 18, text: 'Você quer mudar e dar uma chance para a mudança?', simPara: FLAVIO }
   ];
 
   /** Lado associado a uma resposta ('sim' | 'nao') de uma pergunta. */
@@ -77,7 +80,7 @@
   function buildShareMessage(result, url) {
     var lines = [
       '🇧🇷 FLÁVIO OU LULA? — 111🌽 SÉRIE GOLD',
-      'Respondi às 15 perguntas!',
+      'Respondi às ' + QUESTIONS.length + ' perguntas!',
       'Meu resultado de afinidade:',
       '🟢 Flávio: ' + result.percent[FLAVIO] + '%',
       '🔴 Lula: ' + result.percent[LULA] + '%',
