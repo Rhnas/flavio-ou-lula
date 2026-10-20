@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flávio ou Lula? — 111🌽 Série Gold</title>
+<meta name="description" content="15 perguntas para descobrir com qual projeto você mais se identifica.">
+<meta property="og:title" content="FLÁVIO OU LULA? — 111🌽 SÉRIE GOLD">
+<meta property="og:description" content="15 perguntas para descobrir com qual projeto você mais se identifica.">
+<style>
+  :root{
+    --bg:#121212; --panel:#1d1d1f; --panel2:#2a2a2d; --line:#3a3a3e;
+    --txt:#fff; --muted:#a8a8ae;
+    --green:#00a859; --yellow:#ffd400; --red:#d4202a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;min-height:100vh;display:flex;justify-content:center}
+  .app{width:100%;max-width:520px;display:flex;flex-direction:column;min-height:100vh}
+
+  /* ---------- Cabeçalho ---------- */
+  .hero{position:relative;overflow:hidden;background:#000;border-bottom:3px solid var(--yellow)}
+  .hero svg.art{width:100%;height:auto;aspect-ratio:400/330;display:block}
+  .hero-text{position:relative;margin-top:-46px;padding:30px 14px 14px;text-align:center;
+    background:linear-gradient(to bottom,rgba(0,0,0,0),#000 40px)}
+  .hero h1{font-size:clamp(28px,9vw,44px);font-weight:900;letter-spacing:.5px;line-height:1;text-shadow:0 2px 12px #000}
+  .hero .sub{font-size:clamp(10px,2.9vw,13px);font-weight:700;margin-top:6px;letter-spacing:.4px;color:#f1f1f1}
+  .hero .sig{display:inline-block;margin-top:7px;font-weight:900;font-size:clamp(12px,3.6vw,15px);color:var(--yellow);letter-spacing:1px}
+  .hero .slogan{font-size:clamp(8.5px,2.5vw,11px);margin-top:4px;color:#d6d6d6;letter-spacing:.5px}
+
+  /* ---------- Telas ---------- */
+  main{flex:1;padding:18px 16px 28px;display:flex;flex-direction:column}
+  .screen[hidden]{display:none}
+  .btn{font:inherit;cursor:pointer;border:0;border-radius:14px;color:var(--txt);-webkit-tap-highlight-color:transparent}
+  .btn:focus-visible{outline:3px solid #fff;outline-offset:2px}
+  .btn-primary{width:100%;min-height:58px;font-size:17px;font-weight:900;letter-spacing:.5px;background:linear-gradient(90deg,var(--green),#06813f);}
+  .btn-primary:disabled{background:var(--panel2);color:#77777c;cursor:not-allowed}
+  .btn-ghost{background:var(--panel2);min-height:58px;font-size:16px;font-weight:800;padding:0 20px}
+  .btn-ghost:disabled{opacity:.35;cursor:not-allowed}
+
+  .intro p{color:#e4e4e6;font-size:16px;line-height:1.5;margin-bottom:12px}
+  .intro .rules{margin:14px 0 20px;padding:14px;background:var(--panel);border-radius:14px;border:1px solid var(--line);font-size:14px;color:var(--muted);line-height:1.5}
+
+  .progress-label{font-size:13px;font-weight:900;letter-spacing:1px;color:var(--yellow)}
+  .bar{height:10px;background:var(--panel2);border-radius:99px;margin:8px 0 22px;overflow:hidden}
+  .bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--yellow));border-radius:99px;transition:width .35s ease}
+  .question{font-size:clamp(21px,6vw,27px);font-weight:800;line-height:1.28;margin-bottom:24px;min-height:7.2em}
+  .answers{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px}
+  .answer{min-height:84px;font-size:26px;font-weight:900;letter-spacing:1px;background:var(--panel2);border:3px solid var(--line);transition:transform .08s,background .15s,border-color .15s}
+  .answer:active{transform:scale(.97)}
+  .answer[aria-pressed="true"]{background:linear-gradient(135deg,var(--green),#067c3d);border-color:var(--yellow);box-shadow:0 0 0 3px rgba(255,212,0,.25)}
+  .nav{display:grid;grid-template-columns:1fr 2fr;gap:12px;margin-top:auto}
+
+  /* ---------- Resultado ---------- */
+  .result h2{font-size:15px;letter-spacing:1.5px;text-align:center;color:var(--yellow);font-weight:900;margin-bottom:18px}
+  .res-row{margin-bottom:22px}
+  .res-head{display:flex;justify-content:space-between;align-items:baseline;font-weight:900}
+  .res-name{font-size:19px;letter-spacing:1px}
+  .res-pct{font-size:clamp(46px,15vw,68px);line-height:1;font-variant-numeric:tabular-nums}
+  .track{height:26px;border-radius:99px;background:var(--panel2);overflow:hidden;margin-top:6px}
+  .fill{height:100%;width:0;border-radius:99px;transition:width 1.4s cubic-bezier(.2,.8,.2,1)}
+  .fill.f{background:linear-gradient(90deg,var(--green),var(--yellow))}
+  .fill.l{background:linear-gradient(90deg,#8e1119,var(--red))}
+  .phrase{text-align:center;font-size:17px;font-weight:700;margin:6px 0 10px}
+  .disclaimer{text-align:center;font-size:11.5px;color:var(--muted);line-height:1.45;margin-bottom:22px}
+  .share-btn{background:#25d366;color:#05260f;margin-bottom:12px;width:100%;min-height:60px;font-size:17px;font-weight:900;letter-spacing:.4px}
+  .again-btn{width:100%}
+  .credits{padding:14px 16px 22px;font-size:10.5px;line-height:1.5;color:#808086;text-align:center;border-top:1px solid var(--line)}
+  @media (prefers-reduced-motion:reduce){.bar>i,.fill{transition:none}}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header class="hero" aria-label="Flávio ou Lula?">
+    <svg class="art" viewBox="0 0 400 330" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Bandeira do Brasil ao fundo, foto de Flávio Bolsonaro à esquerda, foto de Lula à direita e uma urna eletrônica ao centro">
+      <defs>
+        <linearGradient id="gL" x1="0" x2="1"><stop offset="0" stop-color="#00a859" stop-opacity=".55"/><stop offset="1" stop-color="#ffd400" stop-opacity="0"/></linearGradient>
+        <linearGradient id="gR" x1="1" x2="0"><stop offset="0" stop-color="#d4202a" stop-opacity=".75"/><stop offset="1" stop-color="#d4202a" stop-opacity="0"/></linearGradient>
+        <radialGradient id="spot" cx=".5" cy=".42" r=".6"><stop offset="0" stop-color="#fff" stop-opacity=".35"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+        <radialGradient id="vig" cx=".5" cy=".5" r=".75"><stop offset=".55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".75"/></radialGradient>
+        <linearGradient id="screen" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9efe0"/><stop offset="1" stop-color="#9fcdb0"/></linearGradient>
+        <linearGradient id="suitD" x1="0" x2="1"><stop offset="0" stop-color="#1b2433"/><stop offset="1" stop-color="#0d121b"/></linearGradient>
+        <linearGradient id="suitL" x1="0" x2="1"><stop offset="0" stop-color="#262f45"/><stop offset="1" stop-color="#111623"/></linearGradient>
+        <clipPath id="clipF"><rect x="0" y="14" width="160" height="316"/></clipPath>
+        <clipPath id="clipL"><rect x="240" y="14" width="160" height="316"/></clipPath>
+        <linearGradient id="tintF" x1="0" x2="1"><stop offset="0" stop-color="#00a859" stop-opacity=".32"/><stop offset="1" stop-color="#ffd400" stop-opacity="0"/></linearGradient>
+        <linearGradient id="tintL" x1="1" x2="0"><stop offset="0" stop-color="#d4202a" stop-opacity=".32"/><stop offset="1" stop-color="#d4202a" stop-opacity="0"/></linearGradient>
+      </defs>
+
+      <!-- Bandeira do Brasil -->
+      <rect width="400" height="330" fill="#009c3b"/>
+      <polygon points="200,28 382,165 200,302 18,165" fill="#ffdf00"/>
+      <circle cx="200" cy="165" r="62" fill="#002776"/>
+      <path d="M142 150 Q200 128 258 168" stroke="#fff" stroke-width="9" fill="none"/>
+      <g fill="#fff"><circle cx="178" cy="172" r="2"/><circle cx="196" cy="182" r="2"/><circle cx="214" cy="160" r="2"/><circle cx="224" cy="178" r="2"/><circle cx="166" cy="158" r="1.6"/><circle cx="208" cy="190" r="1.6"/><circle cx="188" cy="152" r="1.6"/></g>
+
+      <!-- Luz e cor dos lados -->
+      <rect width="400" height="330" fill="url(#gL)"/>
+      <rect width="400" height="330" fill="url(#gR)"/>
+      <rect width="400" height="330" fill="rgba(0,0,0,.28)"/>
+      <rect width="400" height="330" fill="url(#spot)"/>
+
+      <!-- Fotos reais (créditos no rodapé) -->
+      <g id="flavio">
+        <image href="img/flavio.jpg" x="-6" y="14" width="176" height="316" preserveAspectRatio="xMidYMin slice" clip-path="url(#clipF)" alt="Flávio Bolsonaro"/>
+        <rect x="0" y="0" width="160" height="330" fill="url(#tintF)"/>
+      </g>
+      <g id="lula">
+        <image href="img/lula.jpg" x="230" y="14" width="176" height="316" preserveAspectRatio="xMidYMin slice" clip-path="url(#clipL)"/>
+        <rect x="240" y="0" width="160" height="330" fill="url(#tintL)"/>
+      </g>
+
+      <!-- Urna eletrônica (centro) -->
+      <g id="urna">
+        <ellipse cx="200" cy="296" rx="84" ry="10" fill="#000" opacity=".5"/>
+        <path d="M122 292 L134 222 L266 222 L278 292Z" fill="#cfd2d6"/>
+        <path d="M122 292 L134 222 L146 222 L136 292Z" fill="#aeb2b8"/>
+        <rect x="116" y="284" width="168" height="12" rx="3" fill="#9aa0a7"/>
+        <rect x="126" y="112" width="148" height="116" rx="8" fill="#2c3036"/>
+        <rect x="134" y="120" width="84" height="76" rx="3" fill="url(#screen)"/>
+        <rect x="142" y="128" width="30" height="36" rx="2" fill="#7da089"/>
+        <rect x="178" y="130" width="32" height="5" fill="#4a6c57"/><rect x="178" y="141" width="26" height="5" fill="#4a6c57"/><rect x="178" y="152" width="30" height="5" fill="#4a6c57"/>
+        <text x="176" y="188" font-family="Arial" font-weight="900" font-size="15" fill="#1c3b2a" text-anchor="middle">FIM</text>
+        <g fill="#111"><rect x="226" y="122" width="40" height="88" rx="3"/></g>
+        <g fill="#f2f2f2" font-family="Arial" font-weight="700" font-size="7" text-anchor="middle">
+          <rect x="229" y="126" width="10" height="10" rx="1.5"/><rect x="241" y="126" width="10" height="10" rx="1.5"/><rect x="253" y="126" width="10" height="10" rx="1.5"/>
+          <rect x="229" y="139" width="10" height="10" rx="1.5"/><rect x="241" y="139" width="10" height="10" rx="1.5"/><rect x="253" y="139" width="10" height="10" rx="1.5"/>
+          <rect x="229" y="152" width="10" height="10" rx="1.5"/><rect x="241" y="152" width="10" height="10" rx="1.5"/><rect x="253" y="152" width="10" height="10" rx="1.5"/>
+          <rect x="241" y="165" width="10" height="10" rx="1.5"/>
+        </g>
+        <g font-family="Arial" font-weight="800" font-size="8" fill="#111" text-anchor="middle">
+          <text x="234" y="134">1</text><text x="246" y="134">2</text><text x="258" y="134">3</text>
+          <text x="234" y="147">4</text><text x="246" y="147">5</text><text x="258" y="147">6</text>
+          <text x="234" y="160">7</text><text x="246" y="160">8</text><text x="258" y="160">9</text>
+          <text x="246" y="173">0</text>
+        </g>
+        <rect x="229" y="182" width="14" height="9" rx="2" fill="#fff"/><rect x="245" y="182" width="12" height="9" rx="2" fill="#ffd400"/><rect x="259" y="182" width="12" height="9" rx="2" fill="#00a859" transform="translate(-4 0)"/>
+        <rect x="229" y="196" width="34" height="9" rx="2" fill="#00a859"/>
+        <rect x="134" y="202" width="84" height="18" rx="2" fill="#3a3f46"/>
+      </g>
+
+      <rect width="400" height="330" fill="url(#vig)"/>
+    </svg>
+    <div class="hero-text">
+      <h1>FLÁVIO OU LULA?</h1>
+      <div class="sub">15 PERGUNTAS PARA DESCOBRIR COM QUAL PROJETO VOCÊ MAIS SE IDENTIFICA.</div>
+      <div class="sig">111🌽 SÉRIE GOLD</div>
+      <div class="slogan">INFORMAÇÃO. CONSCIÊNCIA. UM BRASIL MELHOR COMEÇA COM SUA ESCOLHA.</div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Início -->
+    <section id="screen-intro" class="screen intro">
+      <p>Responda <strong>SIM</strong> ou <strong>NÃO</strong> a 15 perguntas e veja seu percentual de afinidade.</p>
+      <div class="rules">São duas alternativas por pergunta, sem meio-termo. O resultado é a associação editorial das suas respostas a cada projeto — não é pesquisa eleitoral nem previsão de voto.</div>
+      <button class="btn btn-primary" id="btn-start" type="button">COMEÇAR</button>
+    </section>
+
+    <!-- Pergunta -->
+    <section id="screen-question" class="screen" hidden>
+      <div class="progress-label" id="progress-label" aria-live="polite"></div>
+      <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="15" id="bar"><i id="bar-fill"></i></div>
+      <h2 class="question" id="question-text"></h2>
+      <div class="answers" role="group" aria-label="Resposta">
+        <button class="btn answer" id="btn-sim" type="button" aria-pressed="false">SIM</button>
+        <button class="btn answer" id="btn-nao" type="button" aria-pressed="false">NÃO</button>
+      </div>
+      <div class="nav">
+        <button class="btn btn-ghost" id="btn-back" type="button">← VOLTAR</button>
+        <button class="btn btn-primary" id="btn-next" type="button" disabled>PRÓXIMA →</button>
+      </div>
+    </section>
+
+    <!-- Resultado -->
+    <section id="screen-result" class="screen result" hidden>
+      <h2>RESULTADO DE AFINIDADE</h2>
+      <div class="res-row">
+        <div class="res-head"><span class="res-name">🟢 FLÁVIO</span><span class="res-pct" id="pct-f">0%</span></div>
+        <div class="track"><div class="fill f" id="fill-f"></div></div>
+      </div>
+      <div class="res-row">
+        <div class="res-head"><span class="res-name">🔴 LULA</span><span class="res-pct" id="pct-l">0%</span></div>
+        <div class="track"><div class="fill l" id="fill-l"></div></div>
+      </div>
+      <p class="phrase">Este é o resultado das suas respostas neste quiz.</p>
+      <p class="disclaimer">O resultado representa a associação editorial das respostas a cada projeto e não constitui pesquisa eleitoral, recomendação ou previsão de voto.</p>
+      <button class="btn share-btn" id="btn-share" type="button">COMPARTILHAR MEU RESULTADO</button>
+      <button class="btn btn-ghost again-btn" id="btn-again" type="button">RESPONDER NOVAMENTE</button>
+    </section>
+  </main>
+  <footer class="credits">
+    Fotos: Flávio Bolsonaro — Agência Senado (uso livre com atribuição); Lula — Ricardo Stuckert (CC BY-SA 4.0), foto oficial de 08/08/2026. Via Wikimedia Commons. Quiz de caráter editorial, sem vínculo com os citados.
+  </footer>
+</div>
+
+<script src="quiz.js"></script>
+<script>
+(function () {
+  var Q = QuizCore.QUESTIONS, N = Q.length;
+  var answers, current, result;
+
+  var $ = function (id) { return document.getElementById(id); };
+  var screens = { intro: $('screen-intro'), question: $('screen-question'), result: $('screen-result') };
+
+  function show(name) {
+    Object.keys(screens).forEach(function (k) { screens[k].hidden = (k !== name); });
+    window.scrollTo(0, 0);
+  }
+
+  function reset() {
+    answers = new Array(N).fill(null);
+    current = 0; result = null;
+    $('fill-f').style.width = '0%'; $('fill-l').style.width = '0%';
+    $('pct-f').textContent = '0%'; $('pct-l').textContent = '0%';
+  }
+
+  function render() {
+    $('progress-label').textContent = 'PERGUNTA ' + (current + 1) + ' DE ' + N;
+    $('bar-fill').style.width = ((current + 1) / N * 100) + '%';
+    $('bar').setAttribute('aria-valuenow', current + 1);
+    $('question-text').textContent = Q[current].text;
+    ['sim', 'nao'].forEach(function (a) {
+      $('btn-' + a).setAttribute('aria-pressed', String(answers[current] === a));
+    });
+    $('btn-back').disabled = current === 0;
+    $('btn-next').disabled = answers[current] === null;
+    $('btn-next').textContent = current === N - 1 ? 'VER RESULTADO' : 'PRÓXIMA →';
+  }
+
+  function choose(a) { answers[current] = a; render(); }
+
+  function next() {
+    if (answers[current] === null) return;
+    if (current < N - 1) { current++; render(); } else { finish(); }
+  }
+
+  function back() { if (current > 0) { current--; render(); } }
+
+  function finish() {
+    result = QuizCore.calculate(answers);
+    show('result');
+    var f = result.percent[QuizCore.FLAVIO], l = result.percent[QuizCore.LULA];
+    $('pct-f').textContent = f + '%'; $('pct-l').textContent = l + '%';
+    requestAnimationFrame(function () { requestAnimationFrame(function () {
+      $('fill-f').style.width = f + '%'; $('fill-l').style.width = l + '%';
+    }); });
+  }
+
+  function share() {
+    if (!result) return;
+    window.open(QuizCore.buildShareUrl(result), '_blank', 'noopener');
+  }
+
+  $('btn-start').addEventListener('click', function () { reset(); show('question'); render(); });
+  $('btn-sim').addEventListener('click', function () { choose('sim'); });
+  $('btn-nao').addEventListener('click', function () { choose('nao'); });
+  $('btn-next').addEventListener('click', next);
+  $('btn-back').addEventListener('click', back);
+  $('btn-share').addEventListener('click', share);
+  $('btn-again').addEventListener('click', function () { reset(); show('question'); render(); });
+
+  reset();
+})();
+</script>
+</body>
+</html>
