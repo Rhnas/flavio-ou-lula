@@ -65,6 +65,9 @@
   .disclaimer{text-align:center;font-size:11.5px;color:var(--muted);line-height:1.45;margin-bottom:22px}
   .share-btn{background:#25d366;color:#05260f;margin-bottom:12px;width:100%;min-height:60px;font-size:17px;font-weight:900;letter-spacing:.4px}
   .again-btn{width:100%}
+  .counter{text-align:center;font-size:14px;font-weight:700;color:var(--muted);margin:16px 0 0}
+  .counter[hidden]{display:none}
+  .result .counter{margin:0 0 14px;color:var(--yellow)}
   .credits{padding:14px 16px 22px;font-size:10.5px;line-height:1.5;color:#808086;text-align:center;border-top:1px solid var(--line)}
   @media (prefers-reduced-motion:reduce){.bar>i,.fill{transition:none}}
 </style>
@@ -80,8 +83,6 @@
         <radialGradient id="spot" cx=".5" cy=".42" r=".6"><stop offset="0" stop-color="#fff" stop-opacity=".35"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
         <radialGradient id="vig" cx=".5" cy=".5" r=".75"><stop offset=".55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".75"/></radialGradient>
         <linearGradient id="screen" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9efe0"/><stop offset="1" stop-color="#9fcdb0"/></linearGradient>
-        <linearGradient id="suitD" x1="0" x2="1"><stop offset="0" stop-color="#1b2433"/><stop offset="1" stop-color="#0d121b"/></linearGradient>
-        <linearGradient id="suitL" x1="0" x2="1"><stop offset="0" stop-color="#262f45"/><stop offset="1" stop-color="#111623"/></linearGradient>
         <clipPath id="clipF"><rect x="0" y="14" width="160" height="316"/></clipPath>
         <clipPath id="clipL"><rect x="240" y="14" width="160" height="316"/></clipPath>
         <linearGradient id="tintF" x1="0" x2="1"><stop offset="0" stop-color="#00a859" stop-opacity=".32"/><stop offset="1" stop-color="#ffd400" stop-opacity="0"/></linearGradient>
@@ -103,11 +104,11 @@
 
       <!-- Fotos reais (créditos no rodapé) -->
       <g id="flavio">
-        <image href="img/flavio.jpg" x="-6" y="14" width="176" height="316" preserveAspectRatio="xMidYMin slice" clip-path="url(#clipF)" alt="Flávio Bolsonaro"/>
+        <image href="flavio.jpg" x="-6" y="14" width="176" height="316" preserveAspectRatio="xMidYMin slice" clip-path="url(#clipF)"/>
         <rect x="0" y="0" width="160" height="330" fill="url(#tintF)"/>
       </g>
       <g id="lula">
-        <image href="img/lula.jpg" x="230" y="14" width="176" height="316" preserveAspectRatio="xMidYMin slice" clip-path="url(#clipL)"/>
+        <image href="lula.jpg" x="230" y="14" width="176" height="316" preserveAspectRatio="xMidYMin slice" clip-path="url(#clipL)"/>
         <rect x="240" y="0" width="160" height="330" fill="url(#tintL)"/>
       </g>
 
@@ -156,6 +157,7 @@
       <p>Responda <strong>SIM</strong> ou <strong>NÃO</strong> a 15 perguntas e veja seu percentual de afinidade.</p>
       <div class="rules">São duas alternativas por pergunta, sem meio-termo. O resultado é a associação editorial das suas respostas a cada projeto — não é pesquisa eleitoral nem previsão de voto.</div>
       <button class="btn btn-primary" id="btn-start" type="button">COMEÇAR</button>
+      <p class="counter" id="counter-intro" hidden></p>
     </section>
 
     <!-- Pergunta -->
@@ -185,6 +187,7 @@
         <div class="track"><div class="fill l" id="fill-l"></div></div>
       </div>
       <p class="phrase">Este é o resultado das suas respostas neste quiz.</p>
+      <p class="counter" id="counter-result" hidden></p>
       <p class="disclaimer">O resultado representa a associação editorial das respostas a cada projeto e não constitui pesquisa eleitoral, recomendação ou previsão de voto.</p>
       <button class="btn share-btn" id="btn-share" type="button">COMPARTILHAR MEU RESULTADO</button>
       <button class="btn btn-ghost again-btn" id="btn-again" type="button">RESPONDER NOVAMENTE</button>
@@ -238,8 +241,24 @@
 
   function back() { if (current > 0) { current--; render(); } }
 
+  // Contador público de quizzes concluídos (serviço externo; se falhar, some da tela).
+  var COUNTER_BASE = 'https://abacus.jasoncameron.dev/%/rhnas-flavio-ou-lula/respostas';
+  function counterUrl(action) { return COUNTER_BASE.replace('%', action); }
+  function showCount(n) {
+    if (typeof n !== 'number' || !isFinite(n) || n < 1) return;
+    var txt = '👥 ' + n.toLocaleString('pt-BR') + (n === 1 ? ' pessoa já respondeu o quiz' : ' pessoas já responderam o quiz');
+    ['counter-intro', 'counter-result'].forEach(function (id) { $(id).textContent = txt; $(id).hidden = false; });
+  }
+  function callCounter(action) {
+    if (typeof fetch !== 'function') return;
+    fetch(counterUrl(action)).then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) { if (d) showCount(d.value); })
+      .catch(function () {});
+  }
+
   function finish() {
     result = QuizCore.calculate(answers);
+    callCounter('hit');
     show('result');
     var f = result.percent[QuizCore.FLAVIO], l = result.percent[QuizCore.LULA];
     $('pct-f').textContent = f + '%'; $('pct-l').textContent = l + '%';
@@ -262,6 +281,7 @@
   $('btn-again').addEventListener('click', function () { reset(); show('question'); render(); });
 
   reset();
+  callCounter('get');
 })();
 </script>
 </body>
